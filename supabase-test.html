@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#000000">
+  <title>Teste Supabase · Belê GYM</title>
+  <style>
+    :root{color-scheme:dark;font-family:system-ui,sans-serif;background:#090d0c;color:#f5f7f6}
+    body{margin:0;min-height:100vh;display:grid;place-items:center;padding:24px;box-sizing:border-box}
+    main{width:min(620px,100%);background:#141a18;border:1px solid #29332f;border-radius:18px;padding:26px;box-sizing:border-box}
+    h1{margin-top:0}p{color:#b8c4bf;line-height:1.55}pre{white-space:pre-wrap;overflow-wrap:anywhere;background:#090d0c;padding:14px;border-radius:10px;color:#d8e8e0}
+    .ok{color:#69d9a0}.bad{color:#ff8e8e}button{background:#1ca875;color:#04150e;border:0;border-radius:9px;padding:11px 16px;font-weight:700;cursor:pointer}
+    a{color:#75d9ad}
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Conexão do Belê GYM</h1>
+    <p>Este teste verifica se o projeto Supabase responde. Ele consulta apenas as configurações públicas de autenticação; não tenta ler perfis nem altera dados.</p>
+    <button id="testar" type="button">Testar conexão</button>
+    <h2 id="status">Aguardando teste…</h2>
+    <pre id="detalhes">Clique em “Testar conexão”.</pre>
+    <p><a href="/">Voltar ao Belê GYM</a></p>
+  </main>
+  <script type="module">
+    import { SUPABASE_URL, SUPABASE_PUBLISHABLE_KEY } from './supabase-config.js';
+    const status = document.querySelector('#status');
+    const details = document.querySelector('#detalhes');
+    document.querySelector('#testar').addEventListener('click', async () => {
+      status.textContent = 'Testando…';
+      status.className = '';
+      details.textContent = 'Conectando ao serviço de autenticação do Supabase…';
+      try {
+        const response = await fetch(`${SUPABASE_URL}/auth/v1/settings`, {
+          method: 'GET',
+          headers: { apikey: SUPABASE_PUBLISHABLE_KEY }
+        });
+        if (!response.ok) {
+          const body = await response.text();
+          throw new Error(`Supabase respondeu HTTP ${response.status}: ${body.slice(0, 500)}`);
+        }
+        const settings = await response.json();
+        status.textContent = 'Conexão estabelecida!';
+        status.className = 'ok';
+        details.textContent = `O serviço Auth do Supabase respondeu corretamente (HTTP ${response.status}).
+
+Configuração pública recebida. Nenhum dado de aluno foi consultado ou alterado.
+
+Próxima etapa: configurar e testar o Supabase Auth e as políticas RLS.`;
+      } catch (error) {
+        status.textContent = 'Não foi possível concluir o teste';
+        status.className = 'bad';
+        details.textContent = `${error.message || error}
+
+Confira a URL e a chave publicável em supabase-config.js e verifique se o projeto Supabase está ativo. Não compartilhe chaves secretas.`;
+      }
+    });
+  </script>
+</body>
+</html>

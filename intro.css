@@ -1,0 +1,59 @@
+.bele-intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: var(--ink);
+}
+
+.bele-intro[hidden] { display: none; }
+body:has(.bele-intro:not([hidden])) { overflow: hidden; }
+.bele-intro:not([hidden]) ~ #app { visibility: hidden; }
+
+.bele-intro-wordmark {
+  width: clamp(126px, 27vw, 324px);
+  height: auto;
+  filter: brightness(0) invert(1);
+}
+
+.bele-intro video, .bele-intro-outro {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.bele-intro video {
+  object-fit: contain;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.bele-intro-outro { display: none; }
+.bele-intro[data-phase="playing"] video { opacity: 1; }
+.bele-intro[data-phase] .bele-intro-wordmark { visibility: hidden; }
+
+.bele-intro[data-phase="outro"] .bele-intro-outro {
+  display: grid;
+  place-items: center;
+  align-content: center;
+  gap: clamp(14px, 3vh, 29px);
+  padding: 1rem;
+  background: var(--brand);
+  color: var(--ink);
+  text-align: center;
+}
+
+.bele-intro-outro img {
+  width: clamp(88px, 22vw, 220px);
+  height: auto;
+}
+
+.bele-intro-outro p {
+  font-size: clamp(1.4rem, 3.6vw, 2.6rem);
+  font-weight: 850;
+  line-height: 1;
+}

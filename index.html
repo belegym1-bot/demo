@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#000000">
+  <meta name="description" content="Plataforma da academia para acompanhar seus treinos e os check-ins do seu grupo.">
+  <title>Belê GYM</title>
+  <link rel="icon" href="/assets/mark.png" type="image/png">
+  <link rel="manifest" href="/manifest.webmanifest">
+  <link rel="preload" href="/assets/league-spartan.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="stylesheet" href="/views.css">
+  <link rel="stylesheet" href="/intro.css">
+  <script defer src="/intro.js"></script>
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <div id="bele-intro" class="bele-intro" role="status" hidden>
+    <span class="sr-only">Introdução do Belê GYM</span>
+    <img class="bele-intro-wordmark" src="/assets/logo.png" alt="">
+    <video data-src="/assets/intro-v4.mp4" preload="none" muted playsinline disablepictureinpicture disableremoteplayback aria-hidden="true"></video>
+    <div class="bele-intro-outro" aria-hidden="true">
+      <img src="/assets/mark.png" alt="">
+      <p>Cada treino conta.</p>
+    </div>
+  </div>
+  <div id="app" aria-busy="true"><p class="loading">Carregando Belê GYM…</p></div>
+  <div id="notice" class="notice" role="status" aria-live="polite"></div>
+  <noscript>Ative o JavaScript para usar o Belê GYM.</noscript>
+</body>
+</html>
